@@ -85,7 +85,7 @@ router.post('/login', (req, res, next) => {
    
     // Check if email or password are provided as empty string 
     if (!email  || !password ) {
-      res.status(400).json({ message: "Provide email and password." });
+      res.status(400).json({ message: "Provide both email and password." });
       return;
     }
    
@@ -95,7 +95,7 @@ router.post('/login', (req, res, next) => {
       
         if (!foundUser) {
           // If the user is not found, send an error response
-          res.status(401).json({ message: "User or password incorrect." })
+          res.status(401).json({ message: "User or password is incorrect." })
           return;
         }
    
@@ -134,3 +134,7 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
 })
 
 module.exports = router;
+
+
+
+

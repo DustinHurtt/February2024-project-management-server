@@ -5,7 +5,9 @@ var mongoose = require("mongoose");
 const Project = require("../models/Project");
 const Task = require("../models/Task");
 
-router.post("/", (req, res, next) => {
+const isAuthenticated = require('../middleware/isAuthenticated')
+
+router.post("/", isAuthenticated, (req, res, next) => {
   const { title, description } = req.body;
 
   Project.create({
@@ -55,7 +57,7 @@ router.get("/details/:projectId", (req, res, next) => {
     });
 });
 
-router.put("/update/:projectId", (req, res, next) => {
+router.put("/update/:projectId", isAuthenticated, (req, res, next) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -75,7 +77,7 @@ router.put("/update/:projectId", (req, res, next) => {
     });
 });
 
-router.delete("/delete/:projectId", (req, res, next) => {
+router.delete("/delete/:projectId", isAuthenticated, (req, res, next) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
