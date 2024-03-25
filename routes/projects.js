@@ -6,6 +6,7 @@ const Project = require("../models/Project");
 const Task = require("../models/Task");
 
 const isAuthenticated = require('../middleware/isAuthenticated')
+const isOwner = require('../middleware/isOwner')
 
 router.post("/", isAuthenticated, (req, res, next) => {
   const { title, description } = req.body;
@@ -13,6 +14,7 @@ router.post("/", isAuthenticated, (req, res, next) => {
   Project.create({
     title,
     description,
+    owner: req.user._id
   })
     .then((createdProject) => {
       console.log("this is the created project ===>", createdProject);
@@ -57,7 +59,7 @@ router.get("/details/:projectId", (req, res, next) => {
     });
 });
 
-router.put("/update/:projectId", isAuthenticated, (req, res, next) => {
+router.put("/update/:projectId", isAuthenticated, isOwner, (req, res, next) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
@@ -77,7 +79,7 @@ router.put("/update/:projectId", isAuthenticated, (req, res, next) => {
     });
 });
 
-router.delete("/delete/:projectId", isAuthenticated, (req, res, next) => {
+router.delete("/delete/:projectId", isAuthenticated, isOwner, (req, res, next) => {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {

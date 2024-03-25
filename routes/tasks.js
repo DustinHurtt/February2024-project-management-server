@@ -6,6 +6,8 @@ const Project = require("../models/Project");
 
 const isAuthenticated = require('../middleware/isAuthenticated')
 
+const isOwner = require('../middleware/isOwner')
+
 const { taskCreate } = require('../controllers/taskControllers')
 
 // router.post("/", isAuthenticated, (req, res, next) => {
@@ -40,6 +42,6 @@ const { taskCreate } = require('../controllers/taskControllers')
 //     });
 // });
 
-router.post("/", isAuthenticated, taskCreate);
+router.post("/:projectId", isAuthenticated, isOwner, taskCreate);
 
 module.exports = router;

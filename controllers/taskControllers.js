@@ -1,7 +1,9 @@
-  const Task = require('../models/Task')
-  
-  const taskCreate = (req, res, next) => {
-    
+const Task = require("../models/Task");
+const Project = require('../models/Project')
+
+const taskCreate = (req, res, next) => {
+  const { title, description, projectId } = req.body;
+
   Task.create({
     title,
     description,
@@ -29,9 +31,8 @@
       console.log("Error creating task", err);
       res.json({ errorMessage: "Error creating task", err });
     });
-  }
+};
 
-
-  module.exports = {
-    taskCreate
-  }
+module.exports = {
+  taskCreate,
+};
